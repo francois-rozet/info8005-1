@@ -214,7 +214,8 @@
           owl:inverseOf :author .
 
 :publishedIn rdf:type owl:ObjectProperty ;
-             rdfs:domain :Publication .
+             rdfs:subPropertyOf :includedIn ;
+             rdfs:domain :Article .
 
 :title rdf:type owl:DatatypeProperty ;
        rdfs:range xsd:string .
@@ -256,9 +257,16 @@
 :Department rdf:type owl:Class ;
             rdfs:subClassOf :Organization ,
                             [ rdf:type owl:Restriction ;
-                              owl:onProperty :includedIn ;
-                              owl:someValuesFrom :School ;
-                              owl:maxCardinality "1"^^xsd:nonNegativeInteger ] .
+                              owl:onProperty :departementOfSchool ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger ] .
+
+:departementOfSchool rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf :includedIn ;
+                     rdfs:domain :Department ;
+                     rdfs:range :School .
+
+:schoolOfDepartement rdf:type owl:ObjectProperty ;
+                     owl:inverseOf :departementOfSchool .
 
 # Place
 
@@ -270,18 +278,33 @@
     :Campus rdf:type owl:Class ;
             rdfs:subClassOf :Place ,
                             [ rdf:type owl:Restriction ;
-                              owl:onProperty :includes ;
-                              owl:someValuesFrom :Building ] .
+                              owl:onProperty :campusOfBuilding ;
+                              owl:minCardinality "1"^^xsd:nonNegativeInteger ] .
 
     :Room rdf:type owl:Class ;
           rdfs:subClassOf :Place ,
                           [ rdf:type owl:Restriction ;
-                            owl:onProperty :includedIn ;
-                            owl:someValuesFrom :Building ;
-                            owl:maxCardinality "1"^^xsd:nonNegativeInteger ] .
+                            owl:onProperty :roomOfBuilding ;
+                            owl:cardinality "1"^^xsd:nonNegativeInteger ] .
 
           :Amphitheatre rdf:type owl:Class ;
                         rdfs:subClassOf :Room .
 
           :Office rdf:type owl:Class ;
                   rdfs:subClassOf :Room .
+
+:buildingfOfCampus rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :includedIn ;
+                   rdfs:domain :Building ;
+                   rdfs:range :Campus .
+
+:campusOfBuilding rdf:type owl:ObjectProperty ;
+                  owl:inverseOf :buildingfOfCampus .
+
+:roomOfBuilding rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :includedIn ;
+                rdfs:domain :Room ;
+                rdfs:range :Building .
+
+:buildingOfRoom rdf:type owl:ObjectProperty ;
+                owl:inverseOf :roomOfBuilding .
