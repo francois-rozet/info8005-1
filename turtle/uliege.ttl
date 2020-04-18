@@ -18,7 +18,8 @@
 
 :Lecturer owl:equivalentClass [ rdf:type owl:Restriction ;
                                 owl:onProperty :hosts ;
-                                owl:someValuesFrom :Lecture ] .
+                                owl:someValuesFrom :Lecture ] ;
+          rdfs:subClassOf foaf:Person .
 
     :Professor rdf:type owl:Class ;
                rdfs:subClassOf :Lecturer ,
@@ -74,11 +75,11 @@
                    rdfs:subClassOf :Program .
 
 :enrolls rdf:type owl:ObjectProperty ;
-         owl:inverseOf :enrolledIn ;
          rdfs:domain :Program ;
          rdfs:range foaf:Person .
 
-:enrolledIn rdf:type owl:ObjectProperty .
+:enrolledIn rdf:type owl:ObjectProperty ;
+            owl:inverseOf :enrolls .
 
 :Course rdf:type owl:Class ;
         rdfs:subClassOf [ rdf:type owl:Restriction ;
@@ -98,10 +99,10 @@
                                                                owl:someValuesFrom :MasterProgram ] ) ] .
 
 :teaches rdf:type owl:ObjectProperty ;
-         owl:inverseOf :taughtBy ;
          rdfs:domain foaf:Person .
 
-:taughtBy rdf:type owl:ObjectProperty .
+:taughtBy rdf:type owl:ObjectProperty ;
+          owl:inverseOf :teaches .
 
 # Event
 
@@ -123,56 +124,52 @@
                                   owl:someValuesFrom :Talk ] .
 
 :attends rdf:type owl:ObjectProperty ;
-         owl:inverseOf :attendedBy ;
          rdfs:domain foaf:Agent ;
          rdfs:range foaf:Event .
 
-:attendedBy rdf:type owl:ObjectProperty .
+:attendedBy rdf:type owl:ObjectProperty ;
+            owl:inverseOf :attends .
 
 :hosts rdf:type owl:ObjectProperty ;
-       owl:inverseOf :hostedBy ;
        rdfs:domain foaf:Agent ;
        rdfs:range foaf:Event .
 
-:hostedBy rdf:type owl:ObjectProperty .
+:hostedBy rdf:type owl:ObjectProperty ;
+          owl:inverseOf :hosts .
 
 # Publication
 
 :Publication rdf:type owl:Class ;
-             rdfs:subClassOf foaf:Document ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty :writtenBy ;
+             rdfs:subClassOf [ rdf:type owl:Restriction ;
+                               owl:onProperty :author ;
                                owl:someValuesFrom foaf:Agent ] ,
                              [ rdf:type owl:Restriction ;
                                owl:onProperty :title ;
-                               owl:cardinality "1"^^xsd:nonNegativeInteger ] .
+                               owl:someValuesFrom xsd:string ] .
 
     :Book rdf:type owl:Class ;
           rdfs:subClassOf :Publication .
 
     :Article rdf:type owl:Class ;
-             rdfs:subClassOf :Publication ;
-             rdfs:subClassOf [ rdf:type owl:Restriction ;
+             rdfs:subClassOf :Publication ,
+                             [ rdf:type owl:Restriction ;
                                owl:onProperty :doi ;
                                owl:cardinality "1"^^xsd:nonNegativeInteger ] .
 
-        :BookArticle rdf:type owl:Class ;
-                     rdfs:subClassOf :Article ;
-                     owl:equivalentClass [ rdf:type owl:Restriction ;
+        :BookArticle owl:equivalentClass [ rdf:type owl:Restriction ;
                                            owl:onProperty :publishedIn ;
-                                           owl:someValuesFrom :Book ] .
+                                           owl:someValuesFrom :Book ] ;
+                     rdfs:subClassOf :Article .
 
-        :ConferencePaper rdf:type owl:Class ;
-                         rdfs:subClassOf :Article ;
-                         owl:equivalentClass [ rdf:type owl:Restriction ;
+        :ConferencePaper owl:equivalentClass [ rdf:type owl:Restriction ;
                                                owl:onProperty :publishedIn ;
-                                               owl:someValuesFrom :Conference ] .
+                                               owl:someValuesFrom :Conference ] ;
+                         rdfs:subClassOf :Article .
 
-        :PeriodicalArticle rdf:type owl:Class ;
-                           rdfs:subClassOf :Article ;
-                           owl:equivalentClass [ rdf:type owl:Restriction ;
+        :PeriodicalArticle owl:equivalentClass [ rdf:type owl:Restriction ;
                                                  owl:onProperty :publishedIn ;
-                                                 owl:someValuesFrom :Periodical ] .
+                                                 owl:someValuesFrom :Periodical ] ;
+                           rdfs:subClassOf :Article .
 
     :Periodical rdf:type owl:Class ;
                 rdfs:subClassOf :Publication .
@@ -192,30 +189,20 @@
         :MasterThesis rdf:type owl:Class ;
                       rdfs:subClassOf :Thesis .
 
-:authorOf rdf:type owl:ObjectProperty ;
-          owl:inverseOf :writtenBy ;
-          rdfs:domain foaf:Agent ;
-          rdfs:range foaf:Publication .
+:author rdf:type owl:ObjectProperty ;
+        rdfs:domain foaf:Agent .
 
-:writtenBy rdf:type owl:ObjectProperty .
+:authorOf rdf:type owl:ObjectProperty ;
+          owl:inverseOf :author .
 
 :publishedIn rdf:type owl:ObjectProperty ;
-             owl:inverseOf :publishes ;
-             rdfs:domain :Article ;
-             rdfs:range [ rdf:type owl:Class ;
-                          owl:unionOf ( :Book
-                                        :Periodical
-                                        :Conference ) ] .
-
-:publishes rdf:type owl:ObjectProperty .
-
-:doi rdf:type owl:DatatypeProperty ;
-     rdfs:domain :Article ;
-     rdfs:range xsd:string .
+             rdfs:domain :Publication .
 
 :title rdf:type owl:DatatypeProperty ;
-       rdfs:domain :Article ;
-       rdfs:range xsd:date .
+       rdfs:range xsd:string .
+
+:doi rdf:type owl:DatatypeProperty ;
+     rdfs:range xsd:string .
 
 # Organization
 
@@ -230,10 +217,10 @@
 
 :rector rdf:type owl:ObjectProperty ;
         rdfs:domain :University ;
-        rdfs:range foaf:Person ;
-        owl:inverseOf :rectorOf .
+        rdfs:range foaf:Person .
 
-:rectorOf rdf:type owl:ObjectProperty .
+:rectorOf rdf:type owl:ObjectProperty ;
+          owl:inverseOf :rector .
 
 :School rdf:type owl:Class ;
         rdfs:subClassOf foaf:Organization ,
@@ -243,17 +230,17 @@
 
 :dean rdf:type owl:ObjectProperty ;
       rdfs:domain :School ;
-      rdfs:range foaf:Person ;
-      owl:inverseOf :deanOf .
+      rdfs:range foaf:Person .
 
-:deanOf rdf:type owl:ObjectProperty .
+:deanOf rdf:type owl:ObjectProperty ;
+        owl:inverseOf :dean .
 
 :Department rdf:type owl:Class ;
             rdfs:subClassOf foaf:Organization ,
                             [ rdf:type owl:Restriction ;
                               owl:onProperty :includedIn ;
-                              owl:allValuesFrom :School ;
-                              owl:cardinality "1"^^xsd:nonNegativeInteger ] .
+                              owl:someValuesFrom :School ;
+                              owl:maxCardinality "1"^^xsd:nonNegativeInteger ] .
 
 # Group
 
@@ -271,14 +258,17 @@
               rdfs:subClassOf :Place .
 
     :Campus rdf:type owl:Class ;
-            rdfs:subClassOf :Place .
+            rdfs:subClassOf :Place ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :includes ;
+                              owl:someValuesFrom :Building ] .
 
     :Room rdf:type owl:Class ;
           rdfs:subClassOf :Place ,
                           [ rdf:type owl:Restriction ;
                             owl:onProperty :includedIn ;
                             owl:someValuesFrom :Building ;
-                            owl:cardinality "1"^^xsd:nonNegativeInteger ] .
+                            owl:maxCardinality "1"^^xsd:nonNegativeInteger ] .
 
           :Amphitheatre rdf:type owl:Class ;
                         rdfs:subClassOf :Room .
