@@ -79,11 +79,10 @@
                                   owl:someValuesFrom :University ] ;
             rdfs:subClassOf :Employee .
 
-    :Researcher a owl:Class ;
-                rdfs:subClassOf :Employee ,
-                                [ a owl:Restriction ;
-                                  owl:onProperty :researchTopic ;
-                                  owl:someValuesFrom :Topic ] .
+    :Researcher owl:equivalentClass [ a owl:Restriction ;
+                                      owl:onProperty :researchTopic ;
+                                      owl:someValuesFrom :Topic ] ;
+                rdfs:subClassOf :Employee .
 
     :Administrative a owl:Class ;
                     rdfs:subClassOf :Employee .
