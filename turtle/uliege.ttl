@@ -47,7 +47,10 @@
                                  owl:someValuesFrom :Course ] .
 
 :Student rdf:type owl:Class ;
-         rdfs:subClassOf :Person .
+         rdfs:subClassOf :Person ;
+         owl:equivalentClass [ rdf:type owl:Restriction ;
+                               owl:onProperty :registeredAt ;
+                               owl:someValuesFrom :TeachingInstitution ] .
 
     :BachelorStudent owl:equivalentClass [ rdf:type owl:Restriction ;
                                            owl:onProperty :enrolledIn ;
@@ -68,12 +71,12 @@
 
     :Dean owl:equivalentClass [ rdf:type owl:Restriction ;
                                 owl:onProperty :deanOf ;
-                                owl:someValuesFrom owl:Thing ] ;
+                                owl:someValuesFrom :Faculty ] ;
           rdfs:subClassOf :Employee .
 
     :Rector owl:equivalentClass [ rdf:type owl:Restriction ;
                                   owl:onProperty :rectorOf ;
-                                  owl:someValuesFrom owl:Thing ] ;
+                                  owl:someValuesFrom :University ] ;
             rdfs:subClassOf :Employee .
 
     :Researcher rdf:type owl:Class ;
@@ -84,7 +87,10 @@
 :Program rdf:type owl:Class ;
          rdfs:subClassOf [ rdf:type owl:Restriction ;
                            owl:onProperty :includes ;
-                           owl:someValuesFrom :Course ] .
+                           owl:someValuesFrom :Course ] ;
+         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                           owl:onProperty :taughtIn ;
+                           owl:someValuesFrom :SuperiorInstitution ] .
 
     :BachelierProgram rdf:type owl:Class ;
                       rdfs:subClassOf :Program .
@@ -103,6 +109,8 @@
         rdfs:subClassOf [ rdf:type owl:Restriction ;
                           owl:onProperty :taughtBy ;
                           owl:someValuesFrom :Professor ] .
+    
+    :SuperiorCourse owl:unionOf ( :BachelierCourse :MasterCourse ) .
 
     :BachelierCourse owl:equivalentClass [ rdf:type owl:Class ;
                                            owl:intersectionOf ( :Course
@@ -121,6 +129,11 @@
 
 :taughtBy rdf:type owl:ObjectProperty ;
           owl:inverseOf :teaches .
+
+:taughtIn rdf:type owl:ObjectProperty ;
+          rdfs:domain [ rdf:type owl:Class ; 
+                        owl:unionOf (:Course :Program) ] ;
+          rdfs:range :TeachingInstitution .
 
 # Event
 
@@ -157,7 +170,10 @@
 
 # Publication
 
+:Document rdf:type owl:Class .
+
 :Publication rdf:type owl:Class ;
+             rdfs:subClassOf :Document ;
              rdfs:subClassOf [ rdf:type owl:Restriction ;
                                owl:onProperty :author ;
                                owl:someValuesFrom :Agent ] ,
@@ -225,48 +241,121 @@
 
 # Organization
 
-:University rdf:type owl:Class ;
-            rdfs:subClassOf :Organization ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :includes ;
-                              owl:someValuesFrom :Campus ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :rector ;
-                              owl:maxCardinality "1"^^xsd:nonNegativeInteger ] .
+:TeachingInstitution rdf:type owl:Class ;
+                     rdfs:subClassOf :Organization .
 
-:rector rdf:type owl:ObjectProperty ;
-        rdfs:domain :University ;
-        rdfs:range :Person .
+    :PrimaryInstitution rdf:type owl:Class ;
+                        rdfs:subClassOf :TeachingInstitution .
+
+    :SecondaryInstitution rdf:type owl:Class ;
+                          rdfs:subClassOf :TeachingInstitution .
+
+    :SuperiorInstitution rdf:type owl:Class ;
+                         rdfs:subClassOf :TeachingInstitution .
+
+        :HighSchool rdf:type owl:Class ;
+                    rdfs:subClassOf :SuperiorInstitution .
+
+        :University rdf:type owl:Class ;
+                    rdfs:subClassOf :SuperiorInstitution ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :includes ;
+                                      owl:someValuesFrom :Campus ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :hasAsRector ;
+                                      owl:maxCardinality "1"^^xsd:nonNegativeInteger ] .
+
+:hasAsRector rdf:type owl:ObjectProperty ;
+             rdfs:domain :University ;
+             rdfs:range :Person .
 
 :rectorOf rdf:type owl:ObjectProperty ;
-          owl:inverseOf :rector .
+          owl:inverseOf :hasAsRector .
 
-:School rdf:type owl:Class ;
-        rdfs:subClassOf :Organization ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :dean ;
-                          owl:maxCardinality "1"^^xsd:nonNegativeInteger ] .
+:Faculty rdf:type owl:Class ;
+         rdfs:subClassOf :Organization ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :hasAsDean ;
+                           owl:maxCardinality "1"^^xsd:nonNegativeInteger ] .
 
-:dean rdf:type owl:ObjectProperty ;
-      rdfs:domain :School ;
-      rdfs:range :Person .
+:hasAsDean rdf:type owl:ObjectProperty ;
+           rdfs:domain :Faculty ;
+           rdfs:range :Person .
 
 :deanOf rdf:type owl:ObjectProperty ;
-        owl:inverseOf :dean .
+        owl:inverseOf :hasAsDean .
 
 :Department rdf:type owl:Class ;
             rdfs:subClassOf :Organization ,
                             [ rdf:type owl:Restriction ;
-                              owl:onProperty :departementOfSchool ;
+                              owl:onProperty :departementOfFaculty ;
                               owl:cardinality "1"^^xsd:nonNegativeInteger ] .
 
-:departementOfSchool rdf:type owl:ObjectProperty ;
+:departementOfFaculty rdf:type owl:ObjectProperty ;
                      rdfs:subPropertyOf :includedIn ;
                      rdfs:domain :Department ;
-                     rdfs:range :School .
+                     rdfs:range :Faculty .
 
-:schoolOfDepartement rdf:type owl:ObjectProperty ;
-                     owl:inverseOf :departementOfSchool .
+:facultyOfDepartement rdf:type owl:ObjectProperty ;
+                     owl:inverseOf :departementOfFaculty .
+
+
+:Diploma rdf:type owl:Class ;
+         rdfs:subClassOf :Document .
+
+:yieldsDiploma rdf:type owl:ObjectProperty ;
+               rdfs:range :Diploma ;
+               rdfs:domain :TeachingInstitution .
+
+:diplomaFrom rdf:type owl:ObjectProperty ;
+             owl:inverseOf :yieldsDiploma .
+
+:PrimaryDiploma rdf:type owl:Class ;
+                owl:intersectionOf ( :Diploma
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty :diplomaFrom ;
+                                       owl:someValuesFrom :PrimaryInstitution ] ) .
+
+:SecondaryDiploma rdf:type owl:Class ;
+                  owl:intersectionOf ( :Diploma
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty :diplomaFrom ;
+                                         owl:someValuesFrom :SecondaryInstitution ] ) .
+
+:SuperiorDiploma rdf:type owl:Class ;
+                 owl:intersectionOf ( :Diploma
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :diplomaFrom ;
+                                        owl:someValuesFrom :SuperiorInstitution ] ) .
+
+:hasDiploma rdf:type owl:ObjectProperty ;
+            rdfs:range :Diploma ;
+            rdfs:domain :Person .
+
+:hasAsPrerequisite rdf:type owl:ObjectProperty ;
+                   rdfs:range :SuperiorCourse ;
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf (:Program :SuperiorCourse) ] .
+
+:prerequisiteOf rdf:type owl:ObjectProperty ;
+                owl:inverseOf :hasAsPrerequisite .
+
+:registeredAt rdf:type owl:ObjectProperty ;
+              rdfs:range :TeachingInstitution ;
+              rdfs:domain :Student .
+
+# Diploma restrictions
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty :registeredAt ;
+  owl:someValuesFrom :SuperiorInstitution] rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                             owl:onProperty :hasDiploma ;
+                                                             owl:someValuesFrom :SecondaryDiploma ] .
+[ rdf:type owl:Restriction ;
+  owl:onProperty :registeredAt ;
+  owl:someValuesFrom :SecondaryInstitution] rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                              owl:onProperty :hasDiploma ;
+                                                              owl:someValuesFrom :PrimaryDiploma ] .
 
 # Place
 
