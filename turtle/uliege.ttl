@@ -82,7 +82,7 @@
     :Researcher a owl:Class ;
                 rdfs:subClassOf :Employee ,
                                 [ a owl:Restriction ;
-                                  owl:onProperty researchTopic ;
+                                  owl:onProperty :researchTopic ;
                                   owl:someValuesFrom :Topic ] .
 
     :Administrative a owl:Class ;
@@ -238,7 +238,7 @@
 
 :Topic a owl:Class .
 
-aboutTopic a owl:ObjectProperty ;
+:aboutTopic a owl:ObjectProperty ;
            rdfs:range :Publication ;
            rdfs:domain :Topic .
 
