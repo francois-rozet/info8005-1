@@ -87,8 +87,8 @@
 :Program rdf:type owl:Class ;
          rdfs:subClassOf [ rdf:type owl:Restriction ;
                            owl:onProperty :includes ;
-                           owl:someValuesFrom :Course ] ;
-         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                           owl:someValuesFrom :Course ] ,
+                         [ rdf:type owl:Restriction ;
                            owl:onProperty :taughtIn ;
                            owl:someValuesFrom :SuperiorInstitution ] .
 
@@ -109,7 +109,7 @@
         rdfs:subClassOf [ rdf:type owl:Restriction ;
                           owl:onProperty :taughtBy ;
                           owl:someValuesFrom :Professor ] .
-    
+
     :SuperiorCourse owl:unionOf ( :BachelierCourse :MasterCourse ) .
 
     :BachelierCourse owl:equivalentClass [ rdf:type owl:Class ;
@@ -131,7 +131,7 @@
           owl:inverseOf :teaches .
 
 :taughtIn rdf:type owl:ObjectProperty ;
-          rdfs:domain [ rdf:type owl:Class ; 
+          rdfs:domain [ rdf:type owl:Class ;
                         owl:unionOf (:Course :Program) ] ;
           rdfs:range :TeachingInstitution .
 
@@ -173,8 +173,8 @@
 :Document rdf:type owl:Class .
 
 :Publication rdf:type owl:Class ;
-             rdfs:subClassOf :Document ;
-             rdfs:subClassOf [ rdf:type owl:Restriction ;
+             rdfs:subClassOf :Document ,
+                             [ rdf:type owl:Restriction ;
                                owl:onProperty :author ;
                                owl:someValuesFrom :Agent ] ,
                              [ rdf:type owl:Restriction ;
@@ -292,12 +292,12 @@
                               owl:cardinality "1"^^xsd:nonNegativeInteger ] .
 
 :departementOfFaculty rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf :includedIn ;
-                     rdfs:domain :Department ;
-                     rdfs:range :Faculty .
+                      rdfs:subPropertyOf :includedIn ;
+                      rdfs:domain :Department ;
+                      rdfs:range :Faculty .
 
 :facultyOfDepartement rdf:type owl:ObjectProperty ;
-                     owl:inverseOf :departementOfFaculty .
+                      owl:inverseOf :departementOfFaculty .
 
 
 :Diploma rdf:type owl:Class ;
