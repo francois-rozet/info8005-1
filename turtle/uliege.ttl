@@ -66,8 +66,9 @@
                      rdfs:subClassOf :Student ,
                                      :Researcher .
 
-:Employee a owl:Class ;
-          rdfs:subClassOf :Person .
+:Employee owl:equivalentClass [ a owl:Restriction ;
+                                owl:onProperty :employedBy ;
+                                owl:someValuesFrom owl:Thing ] .
 
     :Dean owl:equivalentClass [ a owl:Restriction ;
                                 owl:onProperty :deanOf ;
@@ -93,6 +94,26 @@
 :researchTopic a owl:ObjectProperty ;
                rdfs:domain :Researcher ;
                rdfs:range :Topic .
+
+:employedBy a owl:ObjectProperty ;
+            rdfs:domain :Person .
+
+:hasAsEmployee a owl:ObjectProperty ;
+               owl:inverseOf :employedBy .
+
+:deanOf a owl:ObjectProperty ;
+        rdfs:subPropertyOf :employedAt ;
+        rdfs:range :Faculty .
+
+:hasAsDean a owl:ObjectProperty ;
+           owl:inverseOf :deanOf .
+
+:rectorOf a owl:ObjectProperty ;
+          rdfs:subPropertyOf :employedAt ;
+          rdfs:range :University .
+
+:hasAsRector a owl:ObjectProperty ;
+             owl:inverseOf :rectorOf .
 
 # Program
 
@@ -314,25 +335,11 @@
                                       owl:onProperty :hasAsRector ;
                                       owl:maxCardinality "1"^^xsd:nonNegativeInteger ] .
 
-:hasAsRector a owl:ObjectProperty ;
-             rdfs:domain :University ;
-             rdfs:range :Person .
-
-:rectorOf a owl:ObjectProperty ;
-          owl:inverseOf :hasAsRector .
-
 :Faculty a owl:Class ;
          rdfs:subClassOf :Organization ,
                          [ a owl:Restriction ;
                            owl:onProperty :hasAsDean ;
                            owl:maxCardinality "1"^^xsd:nonNegativeInteger ] .
-
-:hasAsDean a owl:ObjectProperty ;
-           rdfs:domain :Faculty ;
-           rdfs:range :Person .
-
-:deanOf a owl:ObjectProperty ;
-        owl:inverseOf :hasAsDean .
 
 :Department a owl:Class ;
             rdfs:subClassOf :Organization ,
@@ -433,3 +440,215 @@
 
 :buildingOfRoom a owl:ObjectProperty ;
                 owl:inverseOf :roomOfBuilding .
+
+############
+# Entities #
+############
+
+# FACULTIES AND INSTITUTIONS
+
+<https://www.uliege.be>
+    rdfs:label "Université de Liège"@fr ;
+    rdfs:label "University of Liège"@en ;
+    a :University .
+
+<https://www.provincedeliege.be/hauteecole>
+    rdfs:label "Haute Ecole de la Province de Liège"@fr ;
+    rdfs:label "Higher Education Institution of the Province of Liège"@en ;
+    a :HighSchool .
+
+<https://www.facsa.uliege.be>
+    rdfs:label "Faculté des Sciences Appliquées"@fr ;
+    rdfs:label "School of Engineering"@en ;
+    a :Faculty .
+
+<https://www.facmed.uliege.be>
+    rdfs:label "Faculté de Médecine"@fr ;
+    a :Faculty .
+
+<https://www.fmv.uliege.be>
+    rdfs:label "Faculté de Médecine Vétérinaire"@fr ;
+    rdfs:label "Faculty of Veterinary Medicine"@en ;
+    a :Faculty .
+
+<https://www.fplse.uliege.be>
+    rdfs:label "Faculté de Psychologie, Logopédie & Sciences de l’Éducation"@fr ;
+    a :Faculty .
+
+<http://www.hec.uliege.be>
+    rdfs:label "Haute École de Commerce"@fr ;
+    rdfs:label "Management School"@en ;
+    a :Faculty .
+
+<https://www.fass.uliege.be>
+    rdfs:label "Faculté des Sciences Sociales"@fr ;
+    a :Faculty .
+
+<https://www.gembloux.uliege.be>
+    rdfs:label "Gembloux Agro-Bio Tech" ;
+    a :Faculty .
+
+<https://www.archi.uliege.be>
+    rdfs:label "Faculté d’Architecture"@fr ;
+    a :Faculty .
+
+<https://www.sciences.uliege.be>
+    rdfs:label "Faculté des Sciences"@fr ;
+    a :Faculty .
+
+<https://www.droit.uliege.be>
+    rdfs:label "Faculté de Droit, Sciences Politiques & Criminologie"@fr ;
+    a :Faculty .
+
+<https://www.facphl.uliege.be>
+    rdfs:label "Faculté de Philosophie & Lettres"@fr ;
+    a :Faculty .
+
+# PROGRAMS
+
+<https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A1ICIV01.html>
+    rdfs:label "Bachelier en science de l’ingénieur"@fr ;
+    rdfs:label "Bachelier of Science in Engineering"@en ;
+    a :BachelorProgram .
+
+<https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html>
+    rdfs:label "Master ingénieur civil en science des données"@fr ;
+    rdfs:label "Master of Science in Data Science and Engineering"@en ;
+    a :MasterProgram .
+
+<https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UICI01.html>
+    rdfs:label "Master ingénieur civil en informatique"@fr ;
+    rdfs:label "Master of Science in Computer Science and Engineering"@en ;
+    a :MasterProgram .
+
+# STUDENTS
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=s161317>
+    rdfs:label "Yann Claes" ;
+    a :Person .
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=s161826>
+    rdfs:label "Gaspard Lambrechts" ;
+    a :Person .
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=s161024>
+    rdfs:label "François Rozet" ;
+    a :Person .
+
+# COURSES
+
+<https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html>
+    rdfs:label "Semantic Data"@en ;
+    a :Course ;
+    :includedIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
+    :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u012766> ;
+    :hasAsPrerequisite <https://www.programmes.uliege.be/cocoon/20192020/cours/MATH0013-1.html> .
+
+<https://www.programmes.uliege.be/cocoon/20192020/cours/MATH0013-1.html>
+    rdfs:label "Algèbre"@fr ;
+    rdfs:label "Algebra"@en ;
+    a :Course ;
+    :includedIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A1ICIV01.html> .
+
+# EMPLOYEE
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=u214715>
+    rdfs:label "Gilles Louppe" ;
+    a :Professor ;
+    :employedAt <https://www.uliege.be> .
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878>
+    rdfs:label "Louis Wehenkel" ;
+    a :Professor ;
+    :employedAt <https://www.uliege.be> .
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=u012766>
+    rdfs:label "Jean-Louis Binot" ;
+    a :Professor ;
+    :employedAt <https://www.uliege.be> .
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=u014613>
+    rdfs:label "Eric Delhez" ;
+    a :Professor ;
+    :deanOf <https://www.facsa.uliege.be> .
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=u012665>
+    rdfs:label "Pierre Wolper" ;
+    a :Person ;
+    :rectorOf <https://www.uliege.be> .
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=u190571>
+    rdfs:label "Corinne Bissot" ;
+    a :Administrative ;
+    :employedAt <https://www.uliege.be> .
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=u192659>
+    rdfs:label "Axelle Lambotte" ;
+    a :Administrative ;
+    :employedAt <https://www.uliege.be> .
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=u029818>
+    rdfs:label "Denis Bourguignon" ;
+    a :Technical ;
+    :employedAt <https://www.uliege.be> .
+
+# DIPLOMA
+
+<https://fr.wikipedia.org/wiki/Certificat_d'enseignement_secondaire_sup%C3%A9rieur>
+    rdfs:label "CESS" ;
+    a :SecondaryDiploma .
+
+# PLACES
+
+<https://www.campus.uliege.be/cms/c_9038317/liege-sart-tilman>
+    rdfs:label "Sart Tilman" ;
+    a :Campus ;
+    :includedIn <https://www.uliege.be> .
+
+<https://www.campus.uliege.be/cms/c_9038314/liege-centre-ville>
+    rdfs:label "Liège Centre-ville"@fr ;
+    rdfs:label "Liège city centre"@en ;
+    a :Campus ;
+    :includedIn <https://www.uliege.be> .
+
+<https://www.campus.uliege.be/cms/c_9038319/gembloux>
+    rdfs:label "Gembloux" ;
+    a :Campus ;
+    :includedIn <https://www.uliege.be> .
+
+<https://www.campus.uliege.be/cms/c_9038320/arlon>
+    rdfs:label "Arlon" ;
+    a :Campus ;
+    :includedIn <https://www.uliege.be> .
+
+<https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore>
+    rdfs:label "B28 - Institut Montefiore"@fr ;
+    rdfs:label "B28 - Montefiore Institute"@en ;
+    a :Building ;
+    :buildingfOfCampus <https://www.campus.uliege.be/cms/c_9038317/liege-sart-tilman> .
+
+<https://www.campus.uliege.be/cms/c_1841523/b37-institut-de-mathematiques>
+    rdfs:label "B37 - Institut de Mathématiques"@fr ;
+    rdfs:label "B37 - Institute of Mathematics"@en ;
+    a :Building ;
+    :buildingfOfCampus <https://www.campus.uliege.be/cms/c_9038317/liege-sart-tilman> .
+
+<https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore#R3>
+    rdfs:label "R3" ;
+    a :Amphitheatre ;
+    :roomOfBuilding <https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore> .
+
+<https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore#R7>
+    rdfs:label "R7" ;
+    a :Amphitheatre ;
+    :roomOfBuilding <https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore> .
+
+<https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore#1_141>
+    rdfs:label "1/141" ;
+    a :Office ;
+    :roomOfBuilding <https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore> .
+
+<https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore#0_52>
+    rdfs:label "0/52" ;
+    a :Office ;
+    :roomOfBuilding <https://www.campus.uliege.be/cms/c_1841523/b37-institut-de-mathematiques> .
