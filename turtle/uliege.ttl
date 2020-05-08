@@ -24,13 +24,21 @@
 :Agent a owl:Class ;
        rdfs:subClassOf [ a owl:Restriction ;
                          owl:onProperty :name ;
-                         owl:someValuesFrom xsd:string ] .
+                         owl:someValuesFrom xsd:string ] ;
+       owl:disjointWith :Course ;
+       owl:disjointWith :Document ;
+       owl:disjointWith :Event ;
+       owl:disjointWith :Place ;
+       owl:disjointWith :Program ;
+       owl:disjointWith :Topic .
 
     :Person a owl:Class ;
-            rdfs:subClassOf :Agent .
+            rdfs:subClassOf :Agent ;
+            owl:disjointWith :Organization .
 
     :Organization a owl:Class ;
-                  rdfs:subClassOf :Agent .
+                  rdfs:subClassOf :Agent ;
+                  owl:disjointWith :Person .
 
 # Person
 
@@ -54,7 +62,7 @@
 
     :BachelorStudent owl:equivalentClass [ a owl:Restriction ;
                                            owl:onProperty :enrolledIn ;
-                                           owl:someValuesFrom :BachelierProgram ] ;
+                                           owl:someValuesFrom :BachelorProgram ] ;
                      rdfs:subClassOf :Student .
 
     :MasterStudent owl:equivalentClass [ a owl:Restriction ;
@@ -130,9 +138,15 @@
                            owl:someValuesFrom :SuperiorCourse ] ,
                          [ a owl:Restriction ;
                            owl:onProperty :proposedBy ;
-                           owl:someValuesFrom :SuperiorInstitution ] .
+                           owl:someValuesFrom :SuperiorInstitution ] ;
+         owl:disjointWith :Agent ;
+         owl:disjointWith :Course ;
+         owl:disjointWith :Document ;
+         owl:disjointWith :Event ;
+         owl:disjointWith :Place ;
+         owl:disjointWith :Topic .
 
-    :BachelierProgram a owl:Class ;
+    :BachelorProgram a owl:Class ;
                       rdfs:subClassOf :Program .
 
     :MasterProgram a owl:Class ;
@@ -157,16 +171,22 @@
 :Course a owl:Class ;
         rdfs:subClassOf [ a owl:Restriction ;
                           owl:onProperty :taughtBy ;
-                          owl:someValuesFrom :Professor ] .
+                          owl:someValuesFrom :Professor ] ;
+        owl:disjointWith :Agent ;
+        owl:disjointWith :Document ;
+        owl:disjointWith :Event ;
+        owl:disjointWith :Place ;
+        owl:disjointWith :Program ;
+        owl:disjointWith :Topic .
 
     :SuperiorCourse a owl:Class ;
                     rdfs:subClassOf :Course .
 
-        :BachelierCourse owl:equivalentClass [ a owl:Class ;
+        :BachelorCourse owl:equivalentClass [ a owl:Class ;
                                                owl:intersectionOf ( :Course
                                                                     [ a owl:Restriction ;
                                                                       owl:onProperty :includedIn ;
-                                                                      owl:someValuesFrom :BachelierProgram ] ) ] ;
+                                                                      owl:someValuesFrom :BachelorProgram ] ) ] ;
                          rdfs:subClassOf :SuperiorCourse .
 
         :MasterCourse owl:equivalentClass [ a owl:Class ;
@@ -213,10 +233,17 @@
 :Event a owl:Class ;
        rdfs:subClassOf [ a owl:Restriction ;
                          owl:onProperty time:hasTime ;
-                         owl:someValuesFrom time:TemporalEntity ] .
+                         owl:someValuesFrom time:TemporalEntity ] ;
+       owl:disjointWith :Agent ;
+       owl:disjointWith :Course ;
+       owl:disjointWith :Document ;
+       owl:disjointWith :Place ;
+       owl:disjointWith :Program ;
+       owl:disjointWith :Topic .
 
     :Talk a owl:Class ;
-          rdfs:subClassOf :Event .
+          rdfs:subClassOf :Event ;
+          owl:disjointWith :Conference .
 
         :Lecture a owl:Class ;
                  rdfs:subClassOf :Talk .
@@ -225,7 +252,8 @@
                 rdfs:subClassOf :Event ,
                                 [ a owl:Restriction ;
                                   owl:onProperty :includes ;
-                                  owl:someValuesFrom :Talk ] .
+                                  owl:someValuesFrom :Talk ] ;
+                owl:disjointWith :Talk .
 
 :attends a owl:ObjectProperty ;
          rdfs:domain :Agent ;
@@ -243,7 +271,13 @@
 
 # Publication
 
-:Document a owl:Class .
+:Document a owl:Class ;
+          owl:disjointWith :Agent ;
+          owl:disjointWith :Course ;
+          owl:disjointWith :Event ;
+          owl:disjointWith :Place ;
+          owl:disjointWith :Program ;
+          owl:disjointWith :Topic .
 
 :Publication a owl:Class ;
              rdfs:subClassOf :Document ,
@@ -252,7 +286,8 @@
                                owl:someValuesFrom :Agent ] ,
                              [ a owl:Restriction ;
                                owl:onProperty :title ;
-                               owl:someValuesFrom xsd:string ] .
+                               owl:someValuesFrom xsd:string ] ;
+             owl:disjointWith :Diploma .
 
     :Book a owl:Class ;
           rdfs:subClassOf :Publication .
@@ -293,11 +328,16 @@
         :MasterThesis a owl:Class ;
                       rdfs:subClassOf :Thesis .
 
-:Topic a owl:Class .
+:Topic a owl:Class ;
+       owl:disjointWith :Agent ;
+       owl:disjointWith :Course ;
+       owl:disjointWith :Document ;
+       owl:disjointWith :Event ;
+       owl:disjointWith :Place ;
+       owl:disjointWith :Program .
 
 :aboutTopic a owl:ObjectProperty ;
-            rdfs:range :Publication ;
-            rdfs:domain :Topic .
+            rdfs:range :Topic .
 
 :hasAsAuthor a owl:ObjectProperty ;
              rdfs:range :Agent .
@@ -317,13 +357,19 @@
                      rdfs:subClassOf :Organization .
 
     :PrimaryInstitution a owl:Class ;
-                        rdfs:subClassOf :TeachingInstitution .
+                        rdfs:subClassOf :TeachingInstitution ;
+                        owl:disjointWith :SecondaryInstitution ;
+                        owl:disjointWith :SuperiorInstitution .
 
     :SecondaryInstitution a owl:Class ;
-                          rdfs:subClassOf :TeachingInstitution .
+                          rdfs:subClassOf :TeachingInstitution ;
+                          owl:disjointWith :PrimaryInstitution ;
+                          owl:disjointWith :SuperiorInstitution .
 
     :SuperiorInstitution a owl:Class ;
-                         rdfs:subClassOf :TeachingInstitution .
+                         rdfs:subClassOf :TeachingInstitution ;
+                         owl:disjointWith :PrimaryInstitution ;
+                         owl:disjointWith :SecondaryInstitution .
 
         :HighSchool a owl:Class ;
                     rdfs:subClassOf :SuperiorInstitution .
@@ -358,7 +404,8 @@
                       owl:inverseOf :departementOfFaculty .
 
 :Diploma a owl:Class ;
-         rdfs:subClassOf :Document .
+         rdfs:subClassOf :Document ;
+         owl:disjointWith :Publication .
 
 :yieldsDiploma a owl:ObjectProperty ;
                rdfs:range :Diploma ;
@@ -404,28 +451,42 @@
 
 # Place
 
-:Place a owl:Class .
+:Place a owl:Class ;
+       owl:disjointWith :Agent ;
+       owl:disjointWith :Course ;
+       owl:disjointWith :Document ;
+       owl:disjointWith :Event ;
+       owl:disjointWith :Program ;
+       owl:disjointWith :Topic .
 
     :Building a owl:Class ;
-              rdfs:subClassOf :Place .
+              rdfs:subClassOf :Place ;
+              owl:disjointWith :Campus ;
+              owl:disjointWith :Room .
 
     :Campus a owl:Class ;
             rdfs:subClassOf :Place ,
                             [ a owl:Restriction ;
                               owl:onProperty :campusOfBuilding ;
-                              owl:minCardinality "1"^^xsd:nonNegativeInteger ] .
+                              owl:minCardinality "1"^^xsd:nonNegativeInteger ] ;
+            owl:disjointWith :Building ;
+            owl:disjointWith :Room . 
 
     :Room a owl:Class ;
           rdfs:subClassOf :Place ,
                           [ a owl:Restriction ;
                             owl:onProperty :roomOfBuilding ;
-                            owl:cardinality "1"^^xsd:nonNegativeInteger ] .
+                            owl:cardinality "1"^^xsd:nonNegativeInteger ] ;
+          owl:disjointWith :Building ;
+          owl:disjointWith :Campus .
 
           :Amphitheatre a owl:Class ;
-                        rdfs:subClassOf :Room .
+                        rdfs:subClassOf :Room ;
+                        owl:disjointWith :Office .
 
           :Office a owl:Class ;
-                  rdfs:subClassOf :Room .
+                  rdfs:subClassOf :Room ;
+                  owl:disjointWith :Amphitheatre .
 
 :buildingfOfCampus a owl:ObjectProperty ;
                    rdfs:subPropertyOf :includedIn ;
