@@ -450,7 +450,8 @@
 <https://www.uliege.be>
     rdfs:label "Université de Liège"@fr ;
     rdfs:label "University of Liège"@en ;
-    a :University .
+    a :University ;
+    :hasAsRector <https://www.uliege.be/cms/c_9054334/repertoire?uid=u012665> .
 
 <https://www.provincedeliege.be/hauteecole>
     rdfs:label "Haute Ecole de la Province de Liège"@fr ;
@@ -525,15 +526,20 @@
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161317>
     rdfs:label "Yann Claes" ;
-    a :Person .
+    a :Person ;
+    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
+    :followscourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161826>
     rdfs:label "Gaspard Lambrechts" ;
-    a :Person .
+    a :Person ;
+    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
+    :followscourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161024>
     rdfs:label "François Rozet" ;
-    a :Person .
+    a :Person ;
+    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> .
 
 # COURSES
 
@@ -548,7 +554,22 @@
     rdfs:label "Algèbre"@fr ;
     rdfs:label "Algebra"@en ;
     a :Course ;
+    :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u014613> ;
     :includedIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A1ICIV01.html> .
+
+<https://www.programmes.uliege.be/cocoon/20192020/cours/PROJ0016-1.html>
+    rdfs:label "Big Data Project"@en ;
+    a :Course ;
+    :includedIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
+    :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u214715> .
+
+<https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html>
+    rdfs:label "Advanced Machine Learning"@en ;
+    a :Course ;
+    :includedIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
+    :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u214715> ;
+    :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878> .
+
 
 # EMPLOYEE
 
@@ -574,8 +595,7 @@
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u012665>
     rdfs:label "Pierre Wolper" ;
-    a :Person ;
-    :rectorOf <https://www.uliege.be> .
+    a :Person .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u190571>
     rdfs:label "Corinne Bissot" ;
