@@ -7,7 +7,8 @@
 @prefix time: <http://www.w3.org/2006/time#> .
 @base <http://www.semanticweb.org/ontologies/2020/uliege> .
 
-<http://www.semanticweb.org/ontologies/2020/uliege> a owl:Ontology .
+<http://www.semanticweb.org/ontologies/2020/uliege> a owl:Ontology ;
+                                                    owl:imports time: .
 
 ########################
 # Classes & Properties #
@@ -269,6 +270,9 @@
 :hostedBy a owl:ObjectProperty ;
           owl:inverseOf :hosts .
 
+:place a owl:ObjectProperty ;
+       rdfs:range :Place .
+
 # Publication
 
 :Document a owl:Class ;
@@ -432,9 +436,12 @@
                                         owl:onProperty :diplomaFrom ;
                                         owl:someValuesFrom :SuperiorInstitution ] ) .
 
+:obtainedBy a owl:ObjectProperty ;
+            rdfs:domain :Diploma ;
+            rdfs:range :Person .
+
 :hasDiploma a owl:ObjectProperty ;
-            rdfs:range :Diploma ;
-            rdfs:domain :Person .
+            owl:inverseOf :obtainedBy .
 
 # Diploma restrictions
 
@@ -470,7 +477,7 @@
                               owl:onProperty :campusOfBuilding ;
                               owl:minCardinality "1"^^xsd:nonNegativeInteger ] ;
             owl:disjointWith :Building ;
-            owl:disjointWith :Room . 
+            owl:disjointWith :Room .
 
     :Room a owl:Class ;
           rdfs:subClassOf :Place ,
@@ -524,49 +531,65 @@
 <https://www.facsa.uliege.be>
     rdfs:label "Faculté des Sciences Appliquées"@fr ;
     rdfs:label "School of Engineering"@en ;
-    a :Faculty .
+    a :Faculty ;
+    :includedIn <https://www.uliege.be> .
 
 <https://www.facmed.uliege.be>
     rdfs:label "Faculté de Médecine"@fr ;
-    a :Faculty .
+    a :Faculty ;
+    :includedIn <https://www.uliege.be> .
 
 <https://www.fmv.uliege.be>
     rdfs:label "Faculté de Médecine Vétérinaire"@fr ;
     rdfs:label "Faculty of Veterinary Medicine"@en ;
-    a :Faculty .
+    a :Faculty ;
+    :includedIn <https://www.uliege.be> .
 
 <https://www.fplse.uliege.be>
     rdfs:label "Faculté de Psychologie, Logopédie & Sciences de l'Éducation"@fr ;
-    a :Faculty .
+    a :Faculty ;
+    :includedIn <https://www.uliege.be> .
 
 <http://www.hec.uliege.be>
     rdfs:label "Haute École de Commerce"@fr ;
     rdfs:label "Management School"@en ;
-    a :Faculty .
+    a :Faculty ;
+    :includedIn <https://www.uliege.be> .
 
 <https://www.fass.uliege.be>
     rdfs:label "Faculté des Sciences Sociales"@fr ;
-    a :Faculty .
+    a :Faculty ;
+    :includedIn <https://www.uliege.be> .
 
 <https://www.gembloux.uliege.be>
     rdfs:label "Gembloux Agro-Bio Tech" ;
-    a :Faculty .
+    a :Faculty ;
+    :includedIn <https://www.uliege.be> .
 
 <https://www.archi.uliege.be>
     rdfs:label "Faculté d'Architecture"@fr ;
-    a :Faculty .
+    a :Faculty ;
+    :includedIn <https://www.uliege.be> .
 
 <https://www.sciences.uliege.be>
     rdfs:label "Faculté des Sciences"@fr ;
-    a :Faculty .
+    a :Faculty ;
+    :includedIn <https://www.uliege.be> .
 
 <https://www.droit.uliege.be>
     rdfs:label "Faculté de Droit, Sciences Politiques & Criminologie"@fr ;
-    a :Faculty .
+    a :Faculty ;
+    :includedIn <https://www.uliege.be> .
 
 <https://www.facphl.uliege.be>
     rdfs:label "Faculté de Philosophie & Lettres"@fr ;
-    a :Faculty .
+    a :Faculty ;
+    :includedIn <https://www.uliege.be> .
+
+<http://www.montefiore.ulg.ac.be>
+    rdfs:label "Department of Electrical Engineering and Computer Science"@en ;
+    a :Department ;
+    :departementOfFaculty <https://www.facsa.uliege.be> .
 
 # PROGRAMS
 
@@ -595,7 +618,8 @@
     :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
     :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> ;
     :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/PROJ0016-1.html> ;
-    :enrolledIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> .
+    :enrolledIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
+    :hasDiploma <https://fr.wikipedia.org/wiki/Certificat_d'enseignement_secondaire_sup%C3%A9rieur> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161826>
     rdfs:label "Gaspard Lambrechts" ;
@@ -651,7 +675,6 @@ _:x rdf:type rdf:Statement ;
     :includedIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
     :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u214715> ;
     :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878> .
-
 
 # EMPLOYEE
 
@@ -759,13 +782,18 @@ _:x rdf:type rdf:Statement ;
     a :Amphitheatre ;
     :roomOfBuilding <https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore> .
 
+<https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore#0_36>
+    rdfs:label "0.36" ;
+    a :Amphitheatre ;
+    :roomOfBuilding <https://www.campus.uliege.be/cms/c_1841523/b37-institut-de-mathematiques> .
+
 <https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore#1_141>
-    rdfs:label "1/141" ;
+    rdfs:label "1.141" ;
     a :Office ;
     :roomOfBuilding <https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore> .
 
 <https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore#0_52>
-    rdfs:label "0/52" ;
+    rdfs:label "0.52" ;
     a :Office ;
     :roomOfBuilding <https://www.campus.uliege.be/cms/c_1841523/b37-institut-de-mathematiques> .
 
@@ -785,4 +813,33 @@ _:x rdf:type rdf:Statement ;
 <https://doi.org/10.1007/s10994-006-6226-1>
     rdfs:label "Extremely randomized trees"@en ;
     :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878> ;
+    :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u179884> ;
     :aboutTopic <https://en.wikipedia.org/wiki/Machine_learning> .
+
+# LECTURE
+
+:beginOfSemanticDataLecture
+    rdfs:label "Start of Semantic Data lecture 2020-05-06" ;
+    a time:Instant ;
+    :inXSDDateTime "2020-05-08T09:00:00"^^xsd:dateTime .
+
+:endOfSemanticDataLecture
+    rdfs:label "End of Semantic Data lecture 2020-05-06" ;
+    a time:Instant ;
+    :inXSDDateTime "2020-05-08T09:00:00"^^xsd:dateTime .
+
+:intervalOfSemanticDataLecture
+    rdfs:label "Interval of Semantic Data lecture 2020-05-06" ;
+    a time:Interval ;
+    time:hasBeginning :beginOfSemanticDataLecture ;
+    time:hasEnd :endOfSemanticDataLecture .
+
+<https://www.horaires.uliege.be/calendar/cal?vt=month&eid=2:208461:34&fid0=INFO8005-A-a>
+    rdfs:label "Semantic Data Lecture - 2020-05-06" ;
+    a :Lecture ;
+    :hostedBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u012766> ;
+    :includedIn <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
+    time:hasTime :intervalOfSemanticDataLecture ;
+    :attendedBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161317> ;
+    :attendedBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161024> ;
+    :place <https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore#0_36> .
