@@ -23,26 +23,26 @@ import org.apache.jena.vocabulary.RDFS;
 
 
 public class Jena {
-	
-	public static void make_query(Model model, String filename) throws IOException{
+    
+    public static void make_query(Model model, String filename) throws IOException{
         // Build the query object
         Query query = QueryFactory.read(filename);
         
         // Execute the query
- 		QueryExecution qe = QueryExecutionFactory.create(query, model);
- 		ResultSet results = qe.execSelect();
+        QueryExecution qe = QueryExecutionFactory.create(query, model);
+        ResultSet results = qe.execSelect();
 
- 		// Print the query results 
- 		ResultSetFormatter.out(System.out, results, query);
- 		
- 		qe.close();
-	}
+        // Print the query results 
+        ResultSetFormatter.out(System.out, results, query);
+        
+        qe.close();
+    }
 
     public static void main(String[] args) {
 
-    	String BASE = "http://www.semanticweb.org/ontologies/2020/uliege#";
-    	
-    	// Load
+        String BASE = "http://www.semanticweb.org/ontologies/2020/uliege#";
+        
+        // Load
         FileManager.get().addLocatorClassLoader(Jena.class.getClassLoader());
         Model model = FileManager.get().loadModel("resources/uliege.ttl", null, "TURTLE");
         
@@ -71,8 +71,8 @@ public class Jena {
         
         // Add properties for these resources
         victor_dachet.addProperty(RDFS.label, model.createLiteral("Victor Dachet"))
-        			 .addProperty(RDF.type, model.getResource(BASE + "BachelorStudent"))
-        		     .addProperty(followsCourse, programmation_fonctionnelle);
+                     .addProperty(RDF.type, model.getResource(BASE + "BachelorStudent"))
+                     .addProperty(followsCourse, programmation_fonctionnelle);
         
         programmation_fonctionnelle.addProperty(RDFS.label, model.createLiteral("Programmation Fonctionnelle", "fr"))
                                    .addProperty(RDFS.label, model.createLiteral("Functional programming", "en"))
@@ -80,39 +80,40 @@ public class Jena {
         
         // Modify a certain resource: replace the course Semantic Data by Big Data Project for Gaspard
         if (gaspard.hasProperty(followsCourse)) {
-        	StmtIterator iter = gaspard.listProperties(followsCourse);
-        	Statement prop = null;
-        	try {
-	        	while (iter.hasNext()) {
-	        		Statement stmt = iter.next();
-	        		if (stmt.getObject().asResource().equals(semantic_data))
-	        			prop = stmt;
-	        	}
-        	}
-        	finally {
-        		if (iter != null)
-        			iter.close();
-        	}
-        	if (prop != null) {
-        		prop.changeObject(big_data_project);
-        		System.out.println("Course changed from Semantic Data to Big Data Project for Gaspard");
-        	}
+            StmtIterator iter = gaspard.listProperties(followsCourse);
+            Statement prop = null;
+            try {
+                while (iter.hasNext()) {
+                    Statement stmt = iter.next();
+                    if (stmt.getObject().asResource().equals(semantic_data))
+                        prop = stmt;
+                }
+            }
+            finally {
+                if (iter != null)
+                    iter.close();
+            }
+            if (prop != null) {
+                prop.changeObject(big_data_project);
+                System.out.println("Course changed from Semantic Data to Big Data Project for Gaspard");
+            }
         }
         
         // Delete a certain resource
         yann.removeAll(followsCourse);
         
         try {
-        	make_query(model, "resources/students.rq");
+            make_query(model, "resources/students.rq");
+            make_query(model, "resources/ml_publications.rq");
         }
         catch(IOException e) {
-        	System.out.println("Query failed");
+            System.out.println("Query failed");
         }
         
         // Save        
         FileOutputStream output = null;
         try {
-        	output = new FileOutputStream("resources/modified.ttl");
+            output = new FileOutputStream("resources/modified.ttl");
         } catch(Exception e) {}
         
         model.write(output, "TURTLE");

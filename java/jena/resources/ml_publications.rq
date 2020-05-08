@@ -1,0 +1,15 @@
+PREFIX : <http://www.semanticweb.org/ontologies/2020/uliege#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?student
+       ?professor
+       ?publication
+WHERE
+{
+    ?student :followsCourse ?course .
+    ?course :taughtBy ?professor .
+    ?publication :hasAsAuthor ?professor.
+    ?publication :aboutTopic <https://en.wikipedia.org/wiki/Machine_learning> .
+}
+ORDER BY ASC(?student)
