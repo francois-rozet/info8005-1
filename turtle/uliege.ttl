@@ -102,18 +102,25 @@
                owl:inverseOf :employedBy .
 
 :deanOf a owl:ObjectProperty ;
-        rdfs:subPropertyOf :employedAt ;
+        rdfs:subPropertyOf :employedBy ;
         rdfs:range :Faculty .
 
 :hasAsDean a owl:ObjectProperty ;
            owl:inverseOf :deanOf .
 
 :rectorOf a owl:ObjectProperty ;
-          rdfs:subPropertyOf :employedAt ;
+          rdfs:subPropertyOf :employedBy ;
           rdfs:range :University .
 
 :hasAsRector a owl:ObjectProperty ;
              owl:inverseOf :rectorOf .
+
+:registeredAt a owl:ObjectProperty ;
+              rdfs:domain :Person ;
+              rdfs:range :TeachingInstitution .
+
+:registers a owl:ObjectProperty ;
+           owl:inverseOf :registeredAt .
 
 # Program
 
@@ -295,7 +302,7 @@
 :hasAsAuthor a owl:ObjectProperty ;
         rdfs:domain :Agent .
 
-:hasAsAuthorOf a owl:ObjectProperty ;
+:authorOf a owl:ObjectProperty ;
           owl:inverseOf :hasAsAuthor .
 
 :publishedIn a owl:ObjectProperty ;
@@ -525,7 +532,8 @@
     :name "Yann Claes" ;
     :hasDiploma <https://fr.wikipedia.org/wiki/Certificat_d'enseignement_secondaire_sup%C3%A9rieur> ;
     :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
-    :followscourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> ;
+    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> ;
+    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/PROJ0016-1.html> ;
     :enrolledIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161826>
@@ -533,7 +541,7 @@
     a :Person ;
     :name "Gaspard Lambrechts" ;
     :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
-    :followscourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> ;
+    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> ;
     :hasPassed <https://www.programmes.uliege.be/cocoon/20192020/cours/MATH0013-1.html> ;
     :enrolledIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
     :registeredAt <https://www.uliege.be> .
@@ -543,6 +551,7 @@
     a :Person ;
     :name "François Rozet" ;
     :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
+    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/PROJ0016-1.html> ;
     :enrolledIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
     :hasPassed <https://www.programmes.uliege.be/cocoon/20192020/cours/MATH0013-1.html> .
 
@@ -589,19 +598,25 @@ _:x rdf:type rdf:Statement ;
     rdfs:label "Gilles Louppe" ;
     a :Professor ;
     :name "Gilles Louppe" ;
-    :employedAt <https://www.uliege.be> .
+    :employedBy <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878>
     rdfs:label "Louis Wehenkel" ;
     a :Professor ;
     :name "Louis Wehenkel" ;
-    :employedAt <https://www.uliege.be> .
+    :employedBy <https://www.uliege.be> .
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=u179884>
+    rdfs:label "Pierre Geurts" ;
+    a :Professor ;
+    :name "Pierre Geurts" ;
+    :employedBy <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u012766>
     rdfs:label "Jean-Louis Binot" ;
     a :Professor ;
     :name "Jean-Louis Binot" ;
-    :employedAt <https://www.uliege.be> .
+    :employedBy <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u014613>
     rdfs:label "Eric Delhez" ;
@@ -618,19 +633,19 @@ _:x rdf:type rdf:Statement ;
     rdfs:label "Corinne Bissot" ;
     a :Administrative ;
     :name "Corinne Bissot" ;
-    :employedAt <https://www.uliege.be> .
+    :employedBy <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u192659>
     rdfs:label "Axelle Lambotte" ;
     a :Administrative ;
     :name "Axelle Lambotte" ;
-    :employedAt <https://www.uliege.be> .
+    :employedBy <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u029818>
     rdfs:label "Denis Bourguignon" ;
     a :Technical ;
     :name "Denis Bourguignon" ;
-    :employedAt <https://www.uliege.be> .
+    :employedBy <https://www.uliege.be> .
 
 # DIPLOMA
 
@@ -704,4 +719,9 @@ _:x rdf:type rdf:Statement ;
     a :Article ;
     :title "Understanding Random Forests: From Theory to Practice"@en ;
     :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u214715> ;
+    :aboutTopic <https://en.wikipedia.org/wiki/Machine_learning> .
+
+<https://doi.org/10.1007/s10994-006-6226-1>
+    rdfs:label "Extremely randomized trees"@en ;
+    :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878> ;
     :aboutTopic <https://en.wikipedia.org/wiki/Machine_learning> .
