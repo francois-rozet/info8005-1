@@ -190,6 +190,8 @@
 :wasPassedBy a owl:ObjectProperty ;
              owl:inverseOf :hasPassed .
 
+:grade a owl:DatatypeProperty .
+
 :hasAsPrerequisite a owl:ObjectProperty ,
                      owl:TransitiveProperty ;
                    rdfs:range :SuperiorCourse ;
@@ -239,7 +241,7 @@
 :Publication a owl:Class ;
              rdfs:subClassOf :Document ,
                              [ a owl:Restriction ;
-                               owl:onProperty :author ;
+                               owl:onProperty :hasAsAuthor ;
                                owl:someValuesFrom :Agent ] ,
                              [ a owl:Restriction ;
                                owl:onProperty :title ;
@@ -249,10 +251,7 @@
           rdfs:subClassOf :Publication .
 
     :Article a owl:Class ;
-             rdfs:subClassOf :Publication ,
-                             [ a owl:Restriction ;
-                               owl:onProperty :doi ;
-                               owl:cardinality "1"^^xsd:nonNegativeInteger ] .
+             rdfs:subClassOf :Publication .
 
         :BookArticle owl:equivalentClass [ a owl:Restriction ;
                                            owl:onProperty :publishedIn ;
@@ -293,21 +292,17 @@
             rdfs:range :Publication ;
             rdfs:domain :Topic .
 
-:author a owl:ObjectProperty ;
+:hasAsAuthor a owl:ObjectProperty ;
         rdfs:domain :Agent .
 
-:authorOf a owl:ObjectProperty ;
-          owl:inverseOf :author .
+:hasAsAuthorOf a owl:ObjectProperty ;
+          owl:inverseOf :hasAsAuthor .
 
 :publishedIn a owl:ObjectProperty ;
              rdfs:subPropertyOf :includedIn ;
              rdfs:domain :Article .
 
-:title a owl:DatatypeProperty ;
-       rdfs:range xsd:string .
-
-:doi a owl:DatatypeProperty ;
-     rdfs:range xsd:string .
+:title a owl:DatatypeProperty .
 
 # Organization
 
@@ -473,7 +468,7 @@
     a :Faculty .
 
 <https://www.fplse.uliege.be>
-    rdfs:label "Faculté de Psychologie, Logopédie & Sciences de l’Éducation"@fr ;
+    rdfs:label "Faculté de Psychologie, Logopédie & Sciences de l'Éducation"@fr ;
     a :Faculty .
 
 <http://www.hec.uliege.be>
@@ -490,7 +485,7 @@
     a :Faculty .
 
 <https://www.archi.uliege.be>
-    rdfs:label "Faculté d’Architecture"@fr ;
+    rdfs:label "Faculté d'Architecture"@fr ;
     a :Faculty .
 
 <https://www.sciences.uliege.be>
@@ -508,7 +503,7 @@
 # PROGRAMS
 
 <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A1ICIV01.html>
-    rdfs:label "Bachelier en science de l’ingénieur"@fr ;
+    rdfs:label "Bachelier en science de l'ingénieur"@fr ;
     rdfs:label "Bachelier of Science in Engineering"@en ;
     a :BachelorProgram .
 
@@ -527,32 +522,49 @@
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161317>
     rdfs:label "Yann Claes" ;
     a :Person ;
+    :name "Yann Claes" ;
+    :hasDiploma <https://fr.wikipedia.org/wiki/Certificat_d'enseignement_secondaire_sup%C3%A9rieur> ;
     :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
-    :followscourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> .
+    :followscourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> ;
+    :enrolledIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161826>
     rdfs:label "Gaspard Lambrechts" ;
     a :Person ;
+    :name "Gaspard Lambrechts" ;
     :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
-    :followscourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> .
+    :followscourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> ;
+    :hasPassed <https://www.programmes.uliege.be/cocoon/20192020/cours/MATH0013-1.html> ;
+    :enrolledIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
+    :registeredAt <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161024>
     rdfs:label "François Rozet" ;
     a :Person ;
-    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> .
+    :name "François Rozet" ;
+    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
+    :enrolledIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
+    :hasPassed <https://www.programmes.uliege.be/cocoon/20192020/cours/MATH0013-1.html> .
+
+_:x rdf:type rdf:Statement ;
+    rdf:subject <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161024> ;
+    rdf:predicate :hasPassed ;
+    rdf:object <https://www.programmes.uliege.be/cocoon/20192020/cours/MATH0013-1.html> ;
+    :grade "42"^^xsd:nonNegativeInteger .
 
 # COURSES
 
 <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html>
     rdfs:label "Semantic Data"@en ;
+    rdfs:label "Données sémantiques"@fr ;
     a :Course ;
     :includedIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
     :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u012766> ;
     :hasAsPrerequisite <https://www.programmes.uliege.be/cocoon/20192020/cours/MATH0013-1.html> .
 
 <https://www.programmes.uliege.be/cocoon/20192020/cours/MATH0013-1.html>
-    rdfs:label "Algèbre"@fr ;
     rdfs:label "Algebra"@en ;
+    rdfs:label "Algèbre"@fr ;
     a :Course ;
     :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u014613> ;
     :includedIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A1ICIV01.html> .
@@ -576,40 +588,48 @@
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u214715>
     rdfs:label "Gilles Louppe" ;
     a :Professor ;
+    :name "Gilles Louppe" ;
     :employedAt <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878>
     rdfs:label "Louis Wehenkel" ;
     a :Professor ;
+    :name "Louis Wehenkel" ;
     :employedAt <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u012766>
     rdfs:label "Jean-Louis Binot" ;
     a :Professor ;
+    :name "Jean-Louis Binot" ;
     :employedAt <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u014613>
     rdfs:label "Eric Delhez" ;
+    :name "Eric Delhez" ;
     a :Professor ;
     :deanOf <https://www.facsa.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u012665>
     rdfs:label "Pierre Wolper" ;
-    a :Person .
+    a :Person ;
+    :name "Pierre Wolper" .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u190571>
     rdfs:label "Corinne Bissot" ;
     a :Administrative ;
+    :name "Corinne Bissot" ;
     :employedAt <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u192659>
     rdfs:label "Axelle Lambotte" ;
     a :Administrative ;
+    :name "Axelle Lambotte" ;
     :employedAt <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u029818>
     rdfs:label "Denis Bourguignon" ;
     a :Technical ;
+    :name "Denis Bourguignon" ;
     :employedAt <https://www.uliege.be> .
 
 # DIPLOMA
@@ -672,3 +692,16 @@
     rdfs:label "0/52" ;
     a :Office ;
     :roomOfBuilding <https://www.campus.uliege.be/cms/c_1841523/b37-institut-de-mathematiques> .
+
+# ARTICLES
+
+<https://en.wikipedia.org/wiki/Machine_learning>
+    rdfs:label "Machine Learning"@en ;
+    a :Topic .
+
+<https://arxiv.org/abs/1407.7502>
+    rdfs:label "Understanding Random Forests: From Theory to Practice"@en ;
+    a :Article ;
+    :title "Understanding Random Forests: From Theory to Practice"@en ;
+    :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u214715> ;
+    :aboutTopic <https://en.wikipedia.org/wiki/Machine_learning> .
