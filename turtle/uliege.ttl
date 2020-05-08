@@ -300,7 +300,7 @@
             rdfs:domain :Topic .
 
 :hasAsAuthor a owl:ObjectProperty ;
-        rdfs:domain :Agent .
+             rdfs:range :Agent .
 
 :authorOf a owl:ObjectProperty ;
           owl:inverseOf :hasAsAuthor .
