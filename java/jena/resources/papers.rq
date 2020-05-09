@@ -1,0 +1,14 @@
+PREFIX : <http://www.semanticweb.org/ontologies/2020/uliege#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?paper_label ?author_name
+
+WHERE
+{
+    ?publication a :Article ;
+                 rdfs:label ?paper_label ;
+                 :hasAsAuthor ?author .
+    ?author :name ?author_name .
+}
+ORDER BY ASC(?paper_label)

@@ -2,9 +2,9 @@ PREFIX : <http://www.semanticweb.org/ontologies/2020/uliege#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?name WHERE
+SELECT ?person_name WHERE
 {
     ?person rdf:type :Person .
-    ?person rdfs:label ?name .
+    ?person rdfs:label ?person_name .
 }
-ORDER BY ASC(?name)
+ORDER BY ASC(?person_name)
