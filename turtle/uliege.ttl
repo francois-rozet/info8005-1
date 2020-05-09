@@ -220,7 +220,8 @@
 :wasPassedBy a owl:ObjectProperty ;
              owl:inverseOf :hasPassed .
 
-:grade a owl:DatatypeProperty .
+:grade a owl:DatatypeProperty ;
+       rdfs:range xsd:integer .
 
 :hasAsPrerequisite a owl:ObjectProperty ,
                      owl:TransitiveProperty ;
@@ -355,7 +356,8 @@
              rdfs:subPropertyOf :includedIn ;
              rdfs:domain :Article .
 
-:title a owl:DatatypeProperty .
+:title a owl:DatatypeProperty ;
+       rdfs:range xsd:string .
 
 # Organization
 
@@ -643,7 +645,7 @@ _:x rdf:type rdf:Statement ;
     rdf:subject <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161024> ;
     rdf:predicate :hasPassed ;
     rdf:object <https://www.programmes.uliege.be/cocoon/20192020/cours/MATH0013-1.html> ;
-    :grade "42"^^xsd:nonNegativeInteger .
+    :grade 42 .
 
 # COURSES
 
@@ -730,6 +732,9 @@ _:x rdf:type rdf:Statement ;
     :name "Denis Bourguignon" ;
     :employedBy <https://www.uliege.be> .
 
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:range xsd:string .
+
 # DIPLOMA
 
 <https://fr.wikipedia.org/wiki/Certificat_d'enseignement_secondaire_sup%C3%A9rieur>
@@ -805,13 +810,14 @@ _:x rdf:type rdf:Statement ;
 <https://arxiv.org/abs/1407.7502>
     rdfs:label "Understanding Random Forests: From Theory to Practice"@en ;
     a :Article ;
-    :title "Understanding Random Forests: From Theory to Practice"@en ;
+    :title "Understanding Random Forests: From Theory to Practice" ;
     :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u214715> ;
     :aboutTopic <https://en.wikipedia.org/wiki/Machine_learning> .
 
 <https://doi.org/10.1007/s10994-006-6226-1>
     rdfs:label "Extremely randomized trees"@en ;
     a :Article ;
+    :title "Extremely randomized trees" ;
     :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878> ;
     :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u179884> ;
     :aboutTopic <https://en.wikipedia.org/wiki/Machine_learning> .
