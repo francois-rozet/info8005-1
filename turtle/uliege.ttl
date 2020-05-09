@@ -276,6 +276,9 @@
 :place a owl:ObjectProperty ;
        rdfs:range :Place .
 
+:placeOf a owl:ObjectProperty ;
+         owl:inverseOf :place .
+
 # Publication
 
 :Document a owl:Class ;
