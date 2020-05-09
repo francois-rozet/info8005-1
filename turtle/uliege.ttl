@@ -114,14 +114,16 @@
         rdfs:subPropertyOf :employedBy ;
         rdfs:range :Faculty .
 
-:hasAsDean a owl:ObjectProperty ;
+:hasAsDean a owl:ObjectProperty ,
+             owl:FunctionalProperty ;
            owl:inverseOf :deanOf .
 
 :rectorOf a owl:ObjectProperty ;
           rdfs:subPropertyOf :employedBy ;
           rdfs:range :University .
 
-:hasAsRector a owl:ObjectProperty ;
+:hasAsRector a owl:ObjectProperty ,
+               owl:FunctionalProperty ;
              owl:inverseOf :rectorOf .
 
 :registeredAt a owl:ObjectProperty ;
@@ -382,16 +384,10 @@
                     rdfs:subClassOf :SuperiorInstitution ,
                                     [ a owl:Restriction ;
                                       owl:onProperty :includes ;
-                                      owl:someValuesFrom :Campus ] ,
-                                    [ a owl:Restriction ;
-                                      owl:onProperty :hasAsRector ;
-                                      owl:maxCardinality "1"^^xsd:nonNegativeInteger ] .
+                                      owl:someValuesFrom :Campus ] .
 
 :Faculty a owl:Class ;
-         rdfs:subClassOf :Organization ,
-                         [ a owl:Restriction ;
-                           owl:onProperty :hasAsDean ;
-                           owl:maxCardinality "1"^^xsd:nonNegativeInteger ] .
+         rdfs:subClassOf :Organization .
 
 :Department a owl:Class ;
             rdfs:subClassOf :Organization ,
@@ -399,7 +395,8 @@
                               owl:onProperty :departementOfFaculty ;
                               owl:cardinality "1"^^xsd:nonNegativeInteger ] .
 
-:departementOfFaculty a owl:ObjectProperty ;
+:departementOfFaculty a owl:ObjectProperty ,
+                        owl:FunctionalProperty ;
                       rdfs:subPropertyOf :includedIn ;
                       rdfs:domain :Department ;
                       rdfs:range :Faculty .
@@ -495,7 +492,8 @@
                   rdfs:subClassOf :Room ;
                   owl:disjointWith :Amphitheatre .
 
-:buildingfOfCampus a owl:ObjectProperty ;
+:buildingfOfCampus a owl:ObjectProperty ,
+                     owl:FunctionalProperty ;
                    rdfs:subPropertyOf :includedIn ;
                    rdfs:domain :Building ;
                    rdfs:range :Campus .
@@ -503,7 +501,8 @@
 :campusOfBuilding a owl:ObjectProperty ;
                   owl:inverseOf :buildingfOfCampus .
 
-:roomOfBuilding a owl:ObjectProperty ;
+:roomOfBuilding a owl:ObjectProperty ,
+                  owl:FunctionalProperty ;
                 rdfs:subPropertyOf :includedIn ;
                 rdfs:domain :Room ;
                 rdfs:range :Building .
