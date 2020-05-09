@@ -807,6 +807,10 @@ _:x rdf:type rdf:Statement ;
     rdfs:label "Machine Learning"@en ;
     a :Topic .
 
+<https://en.wikipedia.org/wiki/Electric_power_system>
+    rdfs:label "Electric power system"@en ;
+    a :Topic .
+
 <https://arxiv.org/abs/1407.7502>
     rdfs:label "Understanding Random Forests: From Theory to Practice"@en ;
     a :Article ;
@@ -821,6 +825,13 @@ _:x rdf:type rdf:Statement ;
     :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878> ;
     :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u179884> ;
     :aboutTopic <https://en.wikipedia.org/wiki/Machine_learning> .
+
+<https://ieeexplore.ieee.org/abstract/document/207314>
+    rdfs:label "Extended equal area criterion revisited (EHV power systems)"@en ;
+    a :Article ;
+    :title "Extended equal area criterion revisited (EHV power systems)" ;
+    :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878> ;
+    :aboutTopic <https://en.wikipedia.org/wiki/Electric_power_system> .
 
 # LECTURE
 
