@@ -812,29 +812,30 @@ _:x rdf:type rdf:Statement ;
 
 <https://doi.org/10.1007/s10994-006-6226-1>
     rdfs:label "Extremely randomized trees"@en ;
+    a :Article ;
     :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878> ;
     :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u179884> ;
     :aboutTopic <https://en.wikipedia.org/wiki/Machine_learning> .
 
 # LECTURE
 
-:beginOfSemanticDataLecture
+<https://www.horaires.uliege.be/calendar/cal?vt=month&fid0=INFO8005-A-a&eid=2:208461:34#start>
     rdfs:label "Start of Semantic Data lecture 2020-05-06" ;
     a time:Instant ;
     :inXSDDateTime "2020-05-08T09:00:00"^^xsd:dateTime .
 
-:endOfSemanticDataLecture
+<https://www.horaires.uliege.be/calendar/cal?vt=month&fid0=INFO8005-A-a&eid=2:208461:34#end>
     rdfs:label "End of Semantic Data lecture 2020-05-06" ;
     a time:Instant ;
     :inXSDDateTime "2020-05-08T09:00:00"^^xsd:dateTime .
 
-:intervalOfSemanticDataLecture
+<https://www.horaires.uliege.be/calendar/cal?vt=month&fid0=INFO8005-A-a&eid=2:208461:34#interval>
     rdfs:label "Interval of Semantic Data lecture 2020-05-06" ;
     a time:Interval ;
     time:hasBeginning :beginOfSemanticDataLecture ;
     time:hasEnd :endOfSemanticDataLecture .
 
-<https://www.horaires.uliege.be/calendar/cal?vt=month&eid=2:208461:34&fid0=INFO8005-A-a>
+<https://www.horaires.uliege.be/calendar/cal?vt=month&fid0=INFO8005-A-a&eid=2:208461:34>
     rdfs:label "Semantic Data Lecture - 2020-05-06" ;
     a :Lecture ;
     :hostedBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u012766> ;
