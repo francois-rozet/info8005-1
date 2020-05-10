@@ -694,6 +694,7 @@ _:x rdf:type rdf:Statement ;
     rdfs:label "Gilles Louppe" ;
     a :Professor ;
     :name "Gilles Louppe" ;
+    :researchTopic <https://en.wikipedia.org/wiki/Machine_learning> ;
     :employedBy <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878>
