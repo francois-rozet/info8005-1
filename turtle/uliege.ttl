@@ -619,9 +619,9 @@
     a :Person ;
     :name "Yann Claes" ;
     :hasDiploma <https://fr.wikipedia.org/wiki/Certificat_d'enseignement_secondaire_sup%C3%A9rieur> ;
-    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
-    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> ;
-    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/PROJ0016-1.html> ;
+    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ,
+                   <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> ,
+                   <https://www.programmes.uliege.be/cocoon/20192020/cours/PROJ0016-1.html> ;
     :enrolledIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
     :hasDiploma <https://fr.wikipedia.org/wiki/Certificat_d'enseignement_secondaire_sup%C3%A9rieur> .
 
@@ -629,8 +629,8 @@
     rdfs:label "Gaspard Lambrechts" ;
     a :Person ;
     :name "Gaspard Lambrechts" ;
-    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
-    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> ;
+    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ,
+                   <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8004-1.html> ;
     :hasPassed <https://www.programmes.uliege.be/cocoon/20192020/cours/MATH0013-1.html> ;
     :enrolledIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
     :registeredAt <https://www.uliege.be> .
@@ -639,8 +639,9 @@
     rdfs:label "François Rozet" ;
     a :Person ;
     :name "François Rozet" ;
-    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
-    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/PROJ0016-1.html> ;
+    :followsCourse <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ,
+                   <https://www.programmes.uliege.be/cocoon/20192020/cours/PROJ0016-1.html> ,
+                   <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO0085-1.html> ;
     :enrolledIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
     :hasPassed <https://www.programmes.uliege.be/cocoon/20192020/cours/MATH0013-1.html> .
 
@@ -677,8 +678,15 @@ _:x rdf:type rdf:Statement ;
     rdfs:label "Advanced Machine Learning"@en ;
     a :Course ;
     :includedIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ;
-    :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u214715> ;
-    :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878> .
+    :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u214715> ,
+              <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878> .
+
+<https://www.programmes.uliege.be/cocoon/20192020/cours/INFO0085-1.html>
+  rdfs:label "Compilers"@en ;
+  a :Course ;
+    :includedIn <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UIDA01.html> ,
+                <https://www.programmes.uliege.be/cocoon/20192020/formations/bref/A2UICI01.html> ;
+    :taughtBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u016733> .
 
 # EMPLOYEE
 
@@ -704,6 +712,12 @@ _:x rdf:type rdf:Statement ;
     rdfs:label "Jean-Louis Binot" ;
     a :Professor ;
     :name "Jean-Louis Binot" ;
+    :employedBy <https://www.uliege.be> .
+
+<https://www.uliege.be/cms/c_9054334/repertoire?uid=u016733>
+    rdfs:label "Pascal Fontaine" ;
+    a :Professor ;
+    :name "Pascal Fontaine" ;
     :employedBy <https://www.uliege.be> .
 
 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u014613>
@@ -825,8 +839,8 @@ _:x rdf:type rdf:Statement ;
     rdfs:label "Extremely randomized trees"@en ;
     a :Article ;
     :title "Extremely randomized trees" ;
-    :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878> ;
-    :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u179884> ;
+    :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u013878> ,
+                 <https://www.uliege.be/cms/c_9054334/repertoire?uid=u179884> ;
     :aboutTopic <https://en.wikipedia.org/wiki/Machine_learning> .
 
 <https://ieeexplore.ieee.org/abstract/document/207314>
@@ -860,6 +874,6 @@ _:x rdf:type rdf:Statement ;
     :hostedBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=u012766> ;
     :includedIn <https://www.programmes.uliege.be/cocoon/20192020/cours/INFO8005-1.html> ;
     time:hasTime <https://www.horaires.uliege.be/calendar/cal?vt=month&fid0=INFO8005-A-a&eid=2:208461:34#interval> ;
-    :attendedBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161317> ;
-    :attendedBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161024> ;
+    :attendedBy <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161317> ,
+                <https://www.uliege.be/cms/c_9054334/repertoire?uid=s161024> ;
     :place <https://www.campus.uliege.be/cms/c_1841269/b28-institut-montefiore#0_36> .
