@@ -46,6 +46,14 @@ public class Jena {
         FileManager.get().addLocatorClassLoader(Jena.class.getClassLoader());
         Model model = FileManager.get().loadModel("resources/uliege.ttl", null, "TURTLE");
         
+        try {
+        	make_query(model, "resources/ml_publications.rq");
+        	make_query(model, "resources/bad_students.rq");
+        }
+        catch(IOException e) {
+            System.out.println("Query failed");
+        }
+        
         // Retrieve some useful properties
         Property hasAsRector = (Property) model.getProperty(BASE + "hasAsRector");
         Property followsCourse = (Property) model.getProperty(BASE + "followsCourse");
@@ -103,13 +111,13 @@ public class Jena {
         yann.removeAll(followsCourse);
         
         try {
-            make_query(model, "resources/students.rq");
-            make_query(model, "resources/ml_publications.rq");
+            make_query(model, "resources/persons.rq");
+            make_query(model, "resources/papers.rq");
         }
         catch(IOException e) {
             System.out.println("Query failed");
         }
-        
+
         // Save        
         FileOutputStream output = null;
         try {
