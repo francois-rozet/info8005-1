@@ -856,12 +856,12 @@ _:x rdf:type rdf:Statement ;
 <https://www.horaires.uliege.be/calendar/cal?vt=month&fid0=INFO8005-A-a&eid=2:208461:34#start>
     rdfs:label "Start of Semantic Data lecture 2020-05-06" ;
     a time:Instant ;
-    :inXSDDateTime "2020-05-08T09:00:00"^^xsd:dateTime .
+    time:inXSDDateTime "2020-05-06T09:00:00"^^xsd:dateTime .
 
 <https://www.horaires.uliege.be/calendar/cal?vt=month&fid0=INFO8005-A-a&eid=2:208461:34#end>
     rdfs:label "End of Semantic Data lecture 2020-05-06" ;
     a time:Instant ;
-    :inXSDDateTime "2020-05-08T09:00:00"^^xsd:dateTime .
+    time:inXSDDateTime "2020-05-06T12:30:00"^^xsd:dateTime .
 
 <https://www.horaires.uliege.be/calendar/cal?vt=month&fid0=INFO8005-A-a&eid=2:208461:34#interval>
     rdfs:label "Interval of Semantic Data lecture 2020-05-06" ;
