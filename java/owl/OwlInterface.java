@@ -111,6 +111,10 @@ public class OwlInterface {
 	JCheckBox getSubclassesShallow;
 	final JButton getSubclassesButton = new JButton("Search");
 
+	JPanel getDisjointForm;
+	JComboBox<String> getDisjointClass;
+	final JButton getDisjointButton = new JButton("Search");
+
 	JPanel resultPanel;
 	JTextArea resultText;
 
@@ -300,6 +304,16 @@ public class OwlInterface {
 		);
 		getSubclassesForm.setLayout(new GridBagLayout());
 
+		// getDisjointForm
+		getDisjointForm = new JPanel();
+		getDisjointForm.setBorder(
+			BorderFactory.createCompoundBorder(
+				BorderFactory.createTitledBorder("Get Disjoint Classes"),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)
+			)
+		);
+		getDisjointForm.setLayout(new GridBagLayout());
+
 		// result
 		resultPanel = new JPanel();
 		resultPanel.setBorder(
@@ -321,6 +335,7 @@ public class OwlInterface {
 		reasoningPanel.add(filterByDataPropertyForm);
 		reasoningPanel.add(filterByClassForm);
 		reasoningPanel.add(getSubclassesForm);
+		reasoningPanel.add(getDisjointForm);
 		reasoningPanel.add(resultPanel);
 	}
 
@@ -550,6 +565,13 @@ public class OwlInterface {
 		c.gridx = 1; c.gridy = 1; getSubclassesForm.add(getSubclassesShallow, c);
 		c.gridx = 2; c.gridy = 1; getSubclassesForm.add(getSubclassesButton, c);
 
+		// getDisjointForm
+		getDisjointClass = new JComboBox<String>();
+
+		c.gridx = 0; c.gridy = 0; getDisjointForm.add(new JLabel("Class"), c);
+		c.gridx = 0; c.gridy = 1; getDisjointForm.add(getDisjointClass, c);
+		c.gridx = 1; c.gridy = 1; getDisjointForm.add(getDisjointButton, c);
+
 		// result
 		resultText = new JTextArea();
 		resultText.setColumns(60);
@@ -612,6 +634,8 @@ public class OwlInterface {
 		filterByClassClass.setModel(new DefaultComboBoxModel<String>(classes));
 
 		getSubclassesClass.setModel(new DefaultComboBoxModel<String>(classes));
+
+		getDisjointClass.setModel(new DefaultComboBoxModel<String>(classes));
 	}
 
 	public void createActions() {
@@ -882,6 +906,20 @@ public class OwlInterface {
 				Vector<String> ans = ontology.get_subclasses(
 					getSubclassesClass.getSelectedItem().toString(),
 					getSubclassesShallow.isSelected()
+				);
+
+				if (ans != null)
+					resultText.setText(ans.toString());
+
+				statusLabel.setText(ontology.request_result());
+			}
+		});
+
+		getDisjointButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Vector<String> ans = ontology.get_disjoint_classes(
+					getDisjointClass.getSelectedItem().toString()
 				);
 
 				if (ans != null)
