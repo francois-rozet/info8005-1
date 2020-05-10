@@ -56,7 +56,16 @@
 
 ### Complex
 
-* Every instance that follows some `Course` taught by some `Employee` that is the author of some `Article` about *Electric power system*.
+* Every `Student` that attended some lecture starting at *9:00* the *6 May, 2020*
+
+	```
+	Student and attends some
+		(Lecture and 'has time' some
+			('Time interval' and 'has beginning' some
+				('Time instant' and  'in XSD Date-Time' value "2020-05-06T09:00:00"^^xsd:dateTime)))
+	```
+
+* Every instance that follows some `Course` taught by some `Employee` that is the author of some `Article` about *Electric power system*
 
 	```
 	followsCourse some
@@ -75,5 +84,3 @@
 			(includedIn value 'Master of Science in Computer Science and Engineering' and
 			includedIn value 'Master of Science in Data Science and Engineering'))
 	```
-
-## SPARQL
