@@ -60,8 +60,9 @@ public class OwlInterface {
 	final JButton createIndividualButton = new JButton("Submit");
 
 	JPanel assignLabelForm;
-	JTextField assignLabelLabel;
 	JComboBox<String> assignLabelIRI;
+	JTextField assignLabelLabel;
+	JTextField assignLabelLanguage;
 	final JButton assignLabelButton = new JButton("Submit");
 
 	JPanel assignObjectPropertyForm;
@@ -82,6 +83,10 @@ public class OwlInterface {
 	final JButton saveButton = new JButton("Save");
 
 	// Edit
+	JPanel getLabelForm;
+	JComboBox<String> getLabelIRI;
+	JButton getLabelButton = new JButton("Search");
+
 	JPanel filterByLabelForm;
 	JTextField filterByLabelLabel;
 	final JButton filterByLabelButton = new JButton("Search");
@@ -235,6 +240,16 @@ public class OwlInterface {
 	}
 
 	public void createReasoning() {
+		// getLabelForm
+		getLabelForm = new JPanel();
+		getLabelForm.setBorder(
+			BorderFactory.createCompoundBorder(
+				BorderFactory.createTitledBorder("Get Label by IRI"),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)
+			)
+		);
+		getLabelForm.setLayout(new GridBagLayout());
+
 		// filterByLabelForm
 		filterByLabelForm = new JPanel();
 		filterByLabelForm.setBorder(
@@ -300,6 +315,7 @@ public class OwlInterface {
 		reasoningPanel.setLayout(new BoxLayout(reasoningPanel, BoxLayout.Y_AXIS));
 		reasoningPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
+		reasoningPanel.add(getLabelForm);
 		reasoningPanel.add(filterByLabelForm);
 		reasoningPanel.add(filterByObjectPropertyForm);
 		reasoningPanel.add(filterByDataPropertyForm);
@@ -419,16 +435,19 @@ public class OwlInterface {
 		c.gridx = 2; c.gridy = 1; createIndividualForm.add(createIndividualButton, c);
 
 		// assignLabelForm
-		assignLabelLabel = new JTextField(10);
 		assignLabelIRI = new JComboBox<String>(); assignLabelIRI.setRenderer(new ComboboxToolTipRenderer());
+		assignLabelLabel = new JTextField(10);
+		assignLabelLanguage = new JTextField(10);
 
 		assignLabelIRI.setPrototypeDisplayValue(defaultWidth);
 
-		c.gridx = 0; c.gridy = 0; assignLabelForm.add(new JLabel("Label"), c);
-		c.gridx = 1; c.gridy = 0; assignLabelForm.add(new JLabel("IRI"), c);
-		c.gridx = 0; c.gridy = 1; assignLabelForm.add(assignLabelLabel, c);
-		c.gridx = 1; c.gridy = 1; assignLabelForm.add(assignLabelIRI, c);
-		c.gridx = 2; c.gridy = 1; assignLabelForm.add(assignLabelButton, c);
+		c.gridx = 0; c.gridy = 0; assignLabelForm.add(new JLabel("IRI"), c);
+		c.gridx = 1; c.gridy = 0; assignLabelForm.add(new JLabel("Label"), c);
+		c.gridx = 2; c.gridy = 0; assignLabelForm.add(new JLabel("Language"), c);
+		c.gridx = 0; c.gridy = 1; assignLabelForm.add(assignLabelIRI, c);
+		c.gridx = 1; c.gridy = 1; assignLabelForm.add(assignLabelLabel, c);
+		c.gridx = 2; c.gridy = 1; assignLabelForm.add(assignLabelLanguage, c);
+		c.gridx = 3; c.gridy = 1; assignLabelForm.add(assignLabelButton, c);
 
 		// assignObjectPropertyForm
 		assignObjectPropertySubject = new JComboBox<String>(); assignObjectPropertySubject.setRenderer(new ComboboxToolTipRenderer());
@@ -471,12 +490,25 @@ public class OwlInterface {
 		c.gridx = 0; c.gridy = 1; saveForm.add(saveName, c);
 		c.gridx = 1; c.gridy = 1; saveForm.add(saveButton, c);
 
+		// getLabelForm
+		getLabelIRI = new JComboBox<String>(); getLabelIRI.setRenderer(new ComboboxToolTipRenderer());
+
+		getLabelIRI.setPrototypeDisplayValue(defaultWidth);
+
+		c.gridx = 0; c.gridy = 0; getLabelForm.add(new JLabel("IRI"), c);
+		c.gridx = 0; c.gridy = 1; getLabelForm.add(getLabelIRI, c);
+		c.gridx = 1; c.gridy = 1; getLabelForm.add(getLabelButton, c);
+
 		// filterByLabelForm
 		filterByLabelLabel = new JTextField(10);
 
 		c.gridx = 0; c.gridy = 0; filterByLabelForm.add(new JLabel("Label"), c);
 		c.gridx = 0; c.gridy = 1; filterByLabelForm.add(filterByLabelLabel, c);
 		c.gridx = 1; c.gridy = 1; filterByLabelForm.add(filterByLabelButton, c);
+
+		// filterByObjectPropertyForm
+		filterByObjectPropertyProperty = new JComboBox<String>();
+		filterByObjectPropertyObject = new JTextField(10);
 
 		// filterByObjectPropertyForm
 		filterByObjectPropertyProperty = new JComboBox<String>();
@@ -567,6 +599,10 @@ public class OwlInterface {
 		assignDataPropertyType.setModel(new DefaultComboBoxModel<String>(dataRanges));
 
 		((ComboboxToolTipRenderer) assignDataPropertySubject.getRenderer()).setTooltips(namedIndividuals);
+
+		getLabelIRI.setModel(new DefaultComboBoxModel<String>(namedIndividuals));
+
+		((ComboboxToolTipRenderer) getLabelIRI.getRenderer()).setTooltips(namedIndividuals);
 
 		filterByObjectPropertyProperty.setModel(new DefaultComboBoxModel<String>(objectPropertyNames));
 
@@ -708,8 +744,9 @@ public class OwlInterface {
 				String temp = assignLabelLabel.getText().trim();
 				if (!temp.isEmpty()) {
 					ontology.assign_label(
+						assignLabelIRI.getSelectedItem().toString(),
 						temp,
-						assignLabelIRI.getSelectedItem().toString()
+						assignLabelLanguage.getText().trim()
 					);
 				}
 
@@ -756,6 +793,20 @@ public class OwlInterface {
 						temp
 					);
 				}
+
+				statusLabel.setText(ontology.request_result());
+			}
+		});
+
+		getLabelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Vector<String> ans = ontology.get_label_from_iri(
+					getLabelIRI.getSelectedItem().toString()
+				);
+
+				if (ans != null)
+					resultText.setText(ans.toString());
 
 				statusLabel.setText(ontology.request_result());
 			}
