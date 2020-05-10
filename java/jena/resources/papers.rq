@@ -6,7 +6,7 @@ SELECT ?paper_label ?author_name
 
 WHERE
 {
-    ?publication a :Article ;
+    ?publication a :Publication ;
                  rdfs:label ?paper_label ;
                  :hasAsAuthor ?author .
     ?author :name ?author_name .
