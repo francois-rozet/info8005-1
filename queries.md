@@ -22,10 +22,10 @@
 	Person and rectorOf some University
 	```
 
-* Every `Article` that has *Gilles Louppe* as author
+* Every `Publication` that has *Gilles Louppe* as author
 
 	```
-	Article and hasAsAuthor value 'Gilles Louppe'
+	Publication and hasAsAuthor value 'Gilles Louppe'
 	```
 
 * Every instance that is prerequisite of *Semantic Data*
@@ -98,13 +98,13 @@
 	ORDER BY ASC(?person_name)
 	```
 
-* Retrieve every `Article` with its authors' name
+* Retrieve every `Publication` with its authors' name
 
 	```
 	SELECT ?paper_label ?author_name
 	WHERE
 	{
-		?publication a :Article ;
+		?publication a :Publication ;
 					 rdfs:label ?paper_label ;
 					 :hasAsAuthor ?author .
 		?author :name ?author_name .

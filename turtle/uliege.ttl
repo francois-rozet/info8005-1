@@ -831,7 +831,7 @@ _:x rdf:type rdf:Statement ;
 
 <https://arxiv.org/abs/1407.7502>
     rdfs:label "Understanding Random Forests: From Theory to Practice"@en ;
-    a :Article ;
+    a :DoctoralThesis ;
     :title "Understanding Random Forests: From Theory to Practice" ;
     :hasAsAuthor <https://www.uliege.be/cms/c_9054334/repertoire?uid=u214715> ;
     :aboutTopic <https://en.wikipedia.org/wiki/Machine_learning> .
