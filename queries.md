@@ -84,3 +84,75 @@
 			(includedIn value 'Master of Science in Computer Science and Engineering' and
 			includedIn value 'Master of Science in Data Science and Engineering'))
 	```
+
+## SPARQL
+
+* Retrieve all labels of every `Person`
+
+	```
+	SELECT ?person_name WHERE
+	{
+		?person rdf:type :Person .
+		?person rdfs:label ?person_name .
+	}
+	ORDER BY ASC(?person_name)
+	```
+
+* Retrieve every `Article` with its authors' name
+
+	```
+	SELECT ?paper_label ?author_name
+	WHERE
+	{
+		?publication a :Article ;
+					 rdfs:label ?paper_label ;
+					 :hasAsAuthor ?author .
+		?author :name ?author_name .
+	}
+	ORDER BY ASC(?paper_label)
+	```
+
+* Retrieve every *bad* `Student`, *i.e.* a student that didn't attend every lecture of a `Course`
+
+	```
+	SELECT ?bad_student_name ?course_label
+	WHERE
+	{
+		?student :followsCourse ?course ;
+				 :name ?bad_student_name .
+		?course rdfs:label ?course_label .
+		?lecture a :Lecture ;
+				 :includedIn ?course .
+		FILTER NOT EXISTS {
+			?lecture :attendedBy ?student .
+		}
+	}
+	ORDER BY ASC(?student)
+	```
+
+* Retrieve every `Student` that follows a `Course` taught by a `Professor` who's the author of a `Publication` about *Machine Learning*
+
+	```
+	SELECT ?student_name
+		   ?professor_name
+		   ?ml_publication_label
+	WHERE
+	{
+		?student :followsCourse ?course .
+		?course :taughtBy ?professor .
+		?ml_publication :hasAsAuthor ?professor.
+		?ml_publication :aboutTopic <https://en.wikipedia.org/wiki/Machine_learning> .
+		?student :name ?student_name .
+		?professor :name ?professor_name .
+		?ml_publication rdfs:label ?ml_publication_label .
+	}
+	ORDER BY ASC(?student_name)
+	```
+
+### Header
+
+```
+PREFIX : <http://www.semanticweb.org/ontologies/2020/uliege#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+```
