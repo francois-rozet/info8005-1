@@ -77,7 +77,7 @@
 
 :Employee owl:equivalentClass [ a owl:Restriction ;
                                 owl:onProperty :employedBy ;
-                                owl:someValuesFrom owl:Thing ] .
+                                owl:someValuesFrom :Agent ] .
 
     :Dean owl:equivalentClass [ a owl:Restriction ;
                                 owl:onProperty :deanOf ;
