@@ -31,13 +31,13 @@
 * Every instance that is prerequisite of *Semantic Data*
 
 	```
-	preRequisiteOf value 'Semantic Data'
+	prerequisiteOf value 'Semantic Data'
 	```
 
 * Every `Student` that has passed some `Course` prerequisite of *Semantic Data*
 
 	```
-	Student and hasPassed some (Course and preRequisiteOf value 'Semantic Data')
+	Student and hasPassed some (Course and prerequisiteOf value 'Semantic Data')
 	```
 
 * Every instance who's name is `"François Rozet"`
