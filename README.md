@@ -7,3 +7,7 @@ Project realized as part of the course *Semantic Data* given by **Jean-Louis Bin
 * **Yann Claes** - [yannclaes](https://github.com/yannclaes)
 * **Gaspard Lambrechts** - [lgaspard](https://github.com/lgaspard)
 * **François Rozet** - [francois-rozet](https://github.com/francois-rozet)
+
+## Score
+
+This project received a score of 36/40.
